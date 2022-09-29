@@ -1,8 +1,13 @@
 package com.example.res;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -12,59 +17,69 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-private TextView textView;
-private ImageView imageView;
-private ImageButton imageButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
+public class MainActivity extends AppCompatActivity{
+
+
+BottomNavigationView bottomNavigationView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView=findViewById(R.id.textView);
-        imageView=findViewById(R.id.imageView);
-        imageButton=findViewById(R.id.imageButton1);
-        textView=findViewById(R.id.textView1);
-        imageButton=findViewById(R.id.imageButton2);
-        textView=findViewById(R.id.textView2);
-        imageButton=findViewById(R.id.imageButton3);
-        textView=findViewById(R.id.textView3);
-        imageButton=findViewById(R.id.imageButton4);
-        textView=findViewById(R.id.textView4);
-        imageButton=findViewById(R.id.imageButton5);
-        textView=findViewById(R.id.textView5);
-        imageButton=findViewById(R.id.imageButton6);
-        textView=findViewById(R.id.textView6);
-        imageButton=findViewById(R.id.imageButton7);
-        textView=findViewById(R.id.textView7);
-        imageButton=findViewById(R.id.imageButton8);
-        textView=findViewById(R.id.textView8);
-        imageButton=findViewById(R.id.imageButton9);
-        textView=findViewById(R.id.textView9);
-        imageButton=findViewById(R.id.imageButton10);
-        textView=findViewById(R.id.textView10);
-        imageButton=findViewById(R.id.imageButton11);
-        textView=findViewById(R.id.textView11);
-        imageButton=findViewById(R.id.imageButton12);
-        textView=findViewById(R.id.textView12);
+
+bottomNavigationView=findViewById(R.id.bottomNavigationView);
+fragmentRpl(new HomeFragment());
 
 
 
+bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home:
+                fragmentRpl(new HomeFragment());
+                break;
+
+            case R.id.person:
+                fragmentRpl(new PersonFragment());
+                break;
+
+            case R.id.search:
+                fragmentRpl(new SearchFragment());
+                break;
+
+            case R.id.setting:
+                fragmentRpl(new SettingsFragment());
+                break;
+
+
+        }
 
 
 
-
-
-
-
-
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              textView.setText("American Restaurant");
-            }
-        });
+        return true;
     }
+});
+
+
+
+
+
+
+
+
+
+    }
+    private void fragmentRpl(Fragment fragment ){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout,fragment);
+        fragmentTransaction.commit();
+
+    }
+
 }
